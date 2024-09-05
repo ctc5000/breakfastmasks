@@ -8,7 +8,13 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
     />
     <title>DeepAR Web SDK - Face and body AR in the browser</title>
-    <link rel="stylesheet" href="style.css" />
+    <link href="./output.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -69,65 +75,135 @@
     </div>
 
     <!-- AR screen -->
-    <div class="fixed-fullscreen screen" id="ar-screen" style="display: none">
-      <!-- <canvas class="deepar" id="deepar-canvas"></canvas> -->
+    <div class="fixed inset-0 w-svw h-svh" id="ar-screen" style="display: none">
+      <div class="absolute top-10 left-6 flex flex-col items-center">
+        <img
+          class="mb-8 w-[33px] h-[27px]"
+          src="icons/refresh.svg"
+          id="refresh"
+        />
+        <div
+          class="flex flex-col items-center justify-center gap-1 mb-3"
+          id="accessories"
+        >
+          <img
+            class="bg-white bg-opacity-40 rounded w-[30px] h-[30px] p-1"
+            src="icons/accessoires.svg"
+          />
+          <p class="text-white text-[9px]">Аксессуары</p>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center gap-1 mb-3"
+          id="background"
+        >
+          <img
+            class="bg-white bg-opacity-40 rounded w-[30px] h-[30px] p-1"
+            src="icons/background.svg"
+          />
+          <p class="text-white text-[9px]">Фон</p>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center gap-1 mb-3"
+          id="music"
+        >
+          <img
+            class="bg-white bg-opacity-40 rounded w-[30px] h-[30px] p-1"
+            src="icons/music.svg"
+          />
+          <p class="text-white text-[9px]">Музыка</p>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center gap-1 mb-3"
+          id="heroes"
+        >
+          <img
+            class="bg-white bg-opacity-40 rounded w-[30px] h-[30px] p-1"
+            src="icons/heroes.svg"
+          />
+          <p class="text-white text-[9px]">Герои</p>
+        </div>
+        <div
+          class="flex flex-col items-center justify-center gap-1 mb-3"
+          id="flakes"
+        >
+          <img
+            class="bg-white bg-opacity-40 rounded w-[30px] h-[30px] p-1"
+            src="icons/flakes.svg"
+          />
+          <p class="text-white text-[9px]">Хлопья</p>
+        </div>
+      </div>
+      <div id="close">
+        <img
+          class="absolute top-10 right-6 w-[26px] h-[26px]"
+          src="icons/close.svg"
+        />
+      </div>
+      <div
+        class="absolute bottom-9 left-6 flex flex-col gap-1 items-center"
+        id="download"
+      >
+        <img
+          class="bg-white bg-opacity-40 rounded w-[30px] h-[30px] p-1"
+          src="icons/download.svg"
+        />
+        <p class="text-white text-[9px]">Скачать</p>
+      </div>
 
-      <div class="carousel" id="carousel">
-        <div class="carousel-center" id="carousel-center">
-          <div class="lds-ring" id="loading-spinner" style="display: none">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+      <div class="absolute bottom-40 left-1/2 -translate-x-1/2">
+        <div class="gap-2 justify-center hidden" id="accessories-thumbs">
+          <div
+            class="bg-white bg-opacity-40 rounded w-[35px] h-[35px] p-1 flex justify-center items-center"
+            id="rog-sheki"
+          >
+            <img src="thumbs/rog_sheki.png" />
+          </div>
+          <div
+            class="bg-white bg-opacity-40 rounded w-[35px] h-[35px] p-1 flex justify-center items-center"
+            id="hair-glasses"
+          >
+            <img src="thumbs/hair_glasses.png" />
           </div>
         </div>
-        <div class="carousel-slider">
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/ray-ban-wayfarer.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/viking.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/makeup.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/makeup-split.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/flower_face.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/stallone.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/galaxy.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/humanoid.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/devil_horns.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/ping_pong.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/pixel_hearts.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/snail.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/hope.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/vendetta.png" />
-          </div>
-          <div class="slide">
-            <img class="responsive-img" src="thumbs/fire.png" />
+        <div class="gap-2 justify-center hidden" id="background-thumbs">
+          <div
+            class="bg-white bg-opacity-40 rounded w-[35px] h-[35px] p-1 flex justify-center items-center"
+            id="chocolate"
+          >
+            <img src="thumbs/chocolate.png" />
           </div>
         </div>
+        <div class="gap-2 justify-center hidden" id="flakes-thumbs">
+          <div
+            class="bg-white bg-opacity-40 rounded w-[35px] h-[35px] p-1 flex justify-center items-center"
+            id="mix-hlopya"
+          >
+            <img src="thumbs/mix_hlopya.png" />
+          </div>
+          <div
+            class="bg-white bg-opacity-40 rounded w-[35px] h-[35px] p-1 flex justify-center items-center"
+            id="ring-hlopya"
+          >
+            <img src="thumbs/ring_hlopya.png" />
+          </div>
+          <div
+            class="bg-white bg-opacity-40 rounded w-[35px] h-[35px] p-1 flex justify-center items-center"
+            id="chocolate-hlopya"
+          >
+            <img src="thumbs/chocolate_hlopya.png" />
+          </div>
+        </div>
+      </div>
+      <div
+        class="absolute bottom-12 rounded-full w-20 h-20 border-[20px] border-white border-opacity-80 -translate-x-1/2 left-1/2 box-border"
+        id="record-button"
+      ></div>
+
+      <div class="lds-ring" id="loading-spinner" style="display: none">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </div>
 

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 canvas.deepar {
   border: 0px none;
   background-color: black;
@@ -11,14 +15,15 @@ canvas.deepar {
 body {
   margin: 0px;
   padding: 0px;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 #loading-screen,
 #permission-denied-screen,
 #permission-denied-background {
   background-color: rgb(17 24 39 / 1);
-  background-image: url("./images/gradient.svg"), url("./images/bg-grid-dark.svg");
+  background-image: url('./images/gradient.svg'),
+    url('./images/bg-grid-dark.svg');
   background-repeat: no-repeat, repeat;
   display: flex;
   align-items: center;
