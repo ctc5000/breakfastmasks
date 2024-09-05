@@ -1,8 +1,10 @@
 import * as deepar from 'deepar'
-import Carousel from './carousel.js'
 
 // Log the version. Just in case.
 console.log('Deepar version: ' + deepar.version)
+
+const categories = ['accessories', 'background', 'music', 'heroes', 'flakes']
+
 ;(async function () {
   window.effect = null
 
@@ -13,12 +15,6 @@ console.log('Deepar version: ' + deepar.version)
   const musicButton = document.getElementById('music')
   const heroesButton = document.getElementById('heroes')
   const flakesButton = document.getElementById('flakes')
-  const closeButton = document.getElementById('close')
-  const downloadButton = document.getElementById('download')
-
-  const accessoriesThumbs = document.getElementById('accessories-thumbs')
-  const backgroundThumbs = document.getElementById('background-thumbs')
-  const flakesThumbs = document.getElementById('flakes-thumbs')
 
   const rogSheki = document.getElementById('rog-sheki')
   const hairGlasses = document.getElementById('hair-glasses')
@@ -28,40 +24,23 @@ console.log('Deepar version: ' + deepar.version)
   const chocolateHlopya = document.getElementById('chocolate-hlopya')
 
   const refreshButton = document.getElementById('refresh')
+  const closeButton = document.getElementById('close')
+  const downloadButton = document.getElementById('download')
 
   const handleMenuClick = (event) => {
-    const id = event.currentTarget.id
-    const thumbs = [accessoriesThumbs, backgroundThumbs, flakesThumbs]
+    const menuId = event.currentTarget.id
+    const allMenus = document.querySelectorAll('[id*="-thumbs"]')
+    const shownMenu = document.querySelector(`#${menuId}-thumbs`)
 
-    const toggleVisibility = (elements, id) => {
-      elements.forEach((element) => {
-        if (element.id === id) {
-          element.classList.add('flex')
-          element.classList.remove('hidden')
-        } else {
-          element.classList.add('hidden')
-          element.classList.remove('flex')
-        }
-      })
-    }
-
-    switch (id) {
-      case 'accessories':
-        toggleVisibility(thumbs, 'accessories-thumbs')
-        break
-      case 'background':
-        toggleVisibility(thumbs, 'background-thumbs')
-        break
-      case 'music':
-        toggleVisibility(thumbs, 'music-thumbs')
-        break
-      case 'heroes':
-        toggleVisibility(thumbs, 'heroes-thumbs')
-        break
-      case 'flakes':
-        toggleVisibility(thumbs, 'flakes-thumbs')
-        break
-    }
+    allMenus.forEach((menu) => {
+      if (menu !== shownMenu) {
+        menu.classList.add('hidden')
+        menu.classList.remove('flex')
+      } else {
+        menu.classList.remove('hidden')
+        menu.classList.add('flex')
+      }
+    })
   }
 
   accessoriesButton.addEventListener('click', handleMenuClick)
@@ -111,7 +90,6 @@ console.log('Deepar version: ' + deepar.version)
   const startEffect = async (effect, slot) => {
     const loadingSpinner = document.getElementById('loading-spinner')
     const activeEffect = effectList.find((item) => item === effect)
-    console.log(loadingSpinner)
 
     loadingSpinner.style.display = 'block'
     if (window.effect !== activeEffect) {
@@ -140,13 +118,7 @@ console.log('Deepar version: ' + deepar.version)
     startEffect('effects/Chocolate.deepar', 'background')
   )
   refreshButton.addEventListener('click', async () => {
-    await Promise.all([
-      deepAR.clearEffect('accessories'),
-      deepAR.clearEffect('background'),
-      deepAR.clearEffect('music'),
-      deepAR.clearEffect('heroes'),
-      deepAR.clearEffect('flakes'),
-    ])
+    await Promise.all(categories.map((slot) => deepAR.clearEffect(slot)))
   })
 
   // window.effect = effectList[0]
