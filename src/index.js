@@ -5,7 +5,8 @@ console.log('Deepar version: ' + deepar.version)
 
 const categories = [
   'accessories',
-  // 'background', 'music', 'heroes',
+  // 'background', 'music',
+  // 'heroes',
   'flakes',
 ]
 
@@ -17,7 +18,7 @@ const categories = [
   const accessoriesButton = document.getElementById('accessories')
   // const backgroundButton = document.getElementById('background')
   // const musicButton = document.getElementById('music')
-  // const heroesButton = document.getElementById('heroes')
+  const heroesButton = document.getElementById('heroes')
   const flakesButton = document.getElementById('flakes')
 
   const rogSheki = document.getElementById('rog-sheki')
@@ -26,6 +27,9 @@ const categories = [
   const mixHlopya = document.getElementById('mix-hlopya')
   const ringHlopya = document.getElementById('ring-hlopya')
   const chocolateHlopya = document.getElementById('chocolate-hlopya')
+  const baddy = document.getElementById('baddy')
+  const groom = document.getElementById('groom')
+  const unicorn = document.getElementById('unicorn')
 
   const thumbs = [
     rogSheki,
@@ -34,6 +38,9 @@ const categories = [
     mixHlopya,
     ringHlopya,
     chocolateHlopya,
+    // baddy,
+    // groom,
+    // unicorn,
   ]
 
   const refreshButton = document.getElementById('refresh')
@@ -140,6 +147,15 @@ const categories = [
   chocolate.addEventListener('click', (e) =>
     startEffect(e, 'effects/Chocolate.deepar', 'background')
   )
+  // baddy.addEventListener('click', (e) =>
+  //   startEffect(e, 'effects/Baddy.deepar', 'heroes')
+  // )
+  // groom.addEventListener('click', (e) =>
+  //   startEffect(e, 'effects/Groom.deepar', 'heroes')
+  // )
+  // unicorn.addEventListener('click', (e) =>
+  //   startEffect(e, 'effects/Unicorn.deepar', 'heroes')
+  // )
   refreshButton.addEventListener('click', async () => {
     await Promise.all(categories.map((slot) => deepAR.clearEffect(slot)))
   })
