@@ -3,7 +3,11 @@ import * as deepar from 'deepar'
 // Log the version. Just in case.
 console.log('Deepar version: ' + deepar.version)
 
-const categories = ['accessories', 'background', 'music', 'heroes', 'flakes']
+const categories = [
+  'accessories',
+  // 'background', 'music', 'heroes',
+  'flakes',
+]
 
 ;(async function () {
   window.effect = null
@@ -11,9 +15,9 @@ const categories = ['accessories', 'background', 'music', 'heroes', 'flakes']
   const previewElement = document.getElementById('ar-screen')
 
   const accessoriesButton = document.getElementById('accessories')
-  const backgroundButton = document.getElementById('background')
-  const musicButton = document.getElementById('music')
-  const heroesButton = document.getElementById('heroes')
+  // const backgroundButton = document.getElementById('background')
+  // const musicButton = document.getElementById('music')
+  // const heroesButton = document.getElementById('heroes')
   const flakesButton = document.getElementById('flakes')
 
   const rogSheki = document.getElementById('rog-sheki')
@@ -22,6 +26,15 @@ const categories = ['accessories', 'background', 'music', 'heroes', 'flakes']
   const mixHlopya = document.getElementById('mix-hlopya')
   const ringHlopya = document.getElementById('ring-hlopya')
   const chocolateHlopya = document.getElementById('chocolate-hlopya')
+
+  const thumbs = [
+    rogSheki,
+    hairGlasses,
+    chocolate,
+    mixHlopya,
+    ringHlopya,
+    chocolateHlopya,
+  ]
 
   const refreshButton = document.getElementById('refresh')
   const closeButton = document.getElementById('close')
@@ -44,9 +57,9 @@ const categories = ['accessories', 'background', 'music', 'heroes', 'flakes']
   }
 
   accessoriesButton.addEventListener('click', handleMenuClick)
-  backgroundButton.addEventListener('click', handleMenuClick)
-  musicButton.addEventListener('click', handleMenuClick)
-  heroesButton.addEventListener('click', handleMenuClick)
+  // backgroundButton.addEventListener('click', handleMenuClick)
+  // musicButton.addEventListener('click', handleMenuClick)
+  // heroesButton.addEventListener('click', handleMenuClick)
   flakesButton.addEventListener('click', handleMenuClick)
 
   // trigger loading progress bar animation
@@ -87,35 +100,45 @@ const categories = ['accessories', 'background', 'music', 'heroes', 'flakes']
   document.getElementById('loading-screen').style.display = 'none'
   document.getElementById('ar-screen').style.display = 'block'
 
-  const startEffect = async (effect, slot) => {
-    const loadingSpinner = document.getElementById('loading-spinner')
-    const activeEffect = effectList.find((item) => item === effect)
+  const startEffect = async (event, effect, slot) => {
+    const activeButton = event.currentTarget
 
-    loadingSpinner.style.display = 'block'
-    if (window.effect !== activeEffect) {
-      await deepAR.switchEffect(activeEffect, { slot: slot })
-      window.effect = activeEffect
+    thumbs.forEach((thumb) => {
+      if (thumb === activeButton) {
+        thumb.style.borderStyle = 'solid'
+        thumb.style.borderWidth = '1px'
+        thumb.style.borderColor = '#E92984'
+      } else {
+        thumb.style.borderStyle = 'none'
+      }
+    })
+
+    if (window.effect !== effect) {
+      const loadingSpinner = document.getElementById('loading-spinner')
+      loadingSpinner.style.display = 'block'
+      await deepAR.switchEffect(effect, { slot: slot })
+      window.effect = effect
+      loadingSpinner.style.display = 'none'
     }
-    loadingSpinner.style.display = 'none'
   }
 
-  rogSheki.addEventListener('click', () =>
-    startEffect('effects/Rog_sheki.deepar', 'accessories')
+  rogSheki.addEventListener('click', (e) =>
+    startEffect(e, 'effects/Rog_sheki.deepar', 'accessories')
   )
-  hairGlasses.addEventListener('click', () =>
-    startEffect('effects/Hair_glasses.deepar', 'accessories')
+  hairGlasses.addEventListener('click', (e) =>
+    startEffect(e, 'effects/Hair_glasses.deepar', 'accessories')
   )
-  ringHlopya.addEventListener('click', () =>
-    startEffect('effects/Ring_hlopya.deepar', 'flakes')
+  ringHlopya.addEventListener('click', (e) =>
+    startEffect(e, 'effects/Ring_hlopya.deepar', 'flakes')
   )
-  mixHlopya.addEventListener('click', () =>
-    startEffect('effects/Mix_hlopya.deepar', 'flakes')
+  mixHlopya.addEventListener('click', (e) =>
+    startEffect(e, 'effects/Mix_hlopya.deepar', 'flakes')
   )
-  chocolateHlopya.addEventListener('click', () =>
-    startEffect('effects/Chocolate_hlopya.deepar', 'flakes')
+  chocolateHlopya.addEventListener('click', (e) =>
+    startEffect(e, 'effects/Chocolate_hlopya.deepar', 'flakes')
   )
-  chocolate.addEventListener('click', () =>
-    startEffect('effects/Chocolate.deepar', 'background')
+  chocolate.addEventListener('click', (e) =>
+    startEffect(e, 'effects/Chocolate.deepar', 'background')
   )
   refreshButton.addEventListener('click', async () => {
     await Promise.all(categories.map((slot) => deepAR.clearEffect(slot)))
