@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 // @ts-ignore
 import data from '../../data.js'
 import MenuItem from './MenuItem.js'
@@ -46,10 +46,10 @@ const ARScreen: FC<ARScreenProps> = () => {
   const handleThumbClick = async (effect: string, slot: string) => {
     setIsLoading(true)
 
-    if (slot === 'music') {
-      setTrack(effect)
-      return
-    }
+    // if (slot === 'music') {
+    //   setTrack(effect)
+    //   return
+    // }
 
     setActiveEffect(effect)
 
@@ -89,15 +89,15 @@ const ARScreen: FC<ARScreenProps> = () => {
     setSlot('')
     setIsLoading(false)
     setIsRecording(false)
-    audioRef.current && audioRef.current.pause()
+    // audioRef.current && audioRef.current.pause()
   }
 
-  useEffect(() => {
-    if (!track) return
+  // useEffect(() => {
+  //   if (!track) return
 
-    audioRef.current && audioRef.current.play()
-    setIsLoading(false)
-  }, [track])
+  //   audioRef.current && audioRef.current.play()
+  //   setIsLoading(false)
+  // }, [track])
 
   return (
     <div className="relative">

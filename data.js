@@ -40,11 +40,11 @@ const data = {
       slot: 'music',
       thumbs: [
         {
-          effect: '/music/chocozavr_music.mp3',
+          effect: '/effects/chocozavr_music.deepar',
           icon: '/thumbs/chocozavr_music.png',
         },
         {
-          effect: '/music/unicorn_music.mp3',
+          effect: '/effects/unicorn_music.deepar',
           icon: '/thumbs/unicorn_music.png',
         },
       ],
