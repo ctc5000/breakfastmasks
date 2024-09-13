@@ -18,6 +18,11 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+}
+
 #loading-screen,
 #permission-denied-screen,
 #permission-denied-background {
