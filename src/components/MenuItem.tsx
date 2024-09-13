@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { cn } from '../utils/helpers'
 
 interface MenuItemProps {
   label: string
