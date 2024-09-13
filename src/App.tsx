@@ -1,11 +1,21 @@
+import { useState } from 'react'
 import ARScreen from './components/arScreen'
 import { DeepARProvider } from './hooks/useDeepAR'
+import WelcomeScreen from './components/WelcomeScreen'
 
 function App() {
+  const [isStarted, setIsStarted] = useState(false)
+
   return (
-    <DeepARProvider>
-      <ARScreen />
-    </DeepARProvider>
+    <>
+      {isStarted ? (
+        <DeepARProvider>
+          <ARScreen />
+        </DeepARProvider>
+      ) : (
+        <WelcomeScreen onClick={() => setIsStarted(true)} />
+      )}
+    </>
   )
 }
 
