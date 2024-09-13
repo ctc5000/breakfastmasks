@@ -23,7 +23,7 @@ button {
   font-optical-sizing: auto;
 }
 
-#loading-screen,
+/* #loading-screen,
 #permission-denied-screen,
 #permission-denied-background {
   background-color: rgb(17 24 39 / 1);
@@ -33,7 +33,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .fixed-fullscreen {
   position: fixed;

@@ -6,13 +6,10 @@
   ],
   "compilerOptions": {
     "target": "ES2020",
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": false,
     "lib": ["ES2020", "DOM", "DOM.Iterable", "ESNext.Array"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "paths": {
-      "data.js": ["./data.js"]
-    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
