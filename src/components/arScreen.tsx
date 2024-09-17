@@ -12,12 +12,15 @@ import {
 import LoadingSpinner from './LoadingSpinner.js'
 import RecordButton from './RecordButton.js'
 import ResetButton from './ResetButton.js'
+import Tutorial from './Tutorial.js'
 
 interface ARScreenProps {}
 
 const ARScreen: FC<ARScreenProps> = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isTutorialOpen, setIsTutorialOpen] = useState(true)
+  const [tutorialStep, setTutorialStep] = useState(1)
   const [isRecording, setIsRecording] = useState(false)
   const [activeMenuItem, setActiveMenuItem] = useState('')
   const [slot, setSlot] = useState('')
@@ -113,22 +116,69 @@ const ARScreen: FC<ARScreenProps> = () => {
             />
           ))}
         </div>
-        <div className="absolute bottom-40 left-1/2 -translate-x-1/2">
-          <div className="gap-2 flex justify-center">
-            {activeThumbs.length > 0 &&
-              activeThumbs.map((thumb: any) => (
-                <Thumb
-                  {...thumb}
-                  isActive={thumb.effect === activeEffect}
-                  onClick={() => handleThumbClick(thumb.effect, slot)}
-                  key={thumb.effect}
+        {isTutorialOpen ? (
+          data.tutorial
+            .filter((step: { step: number }) => step.step === tutorialStep)
+            .map((step: any) => (
+              <div key={step.step}>
+                <Tutorial
+                  {...step}
+                  onClickNext={() => {
+                    tutorialStep < 4
+                      ? setTutorialStep(tutorialStep + 1)
+                      : setIsTutorialOpen(false)
+                  }}
+                  onClickSkip={() => {
+                    setIsTutorialOpen(false)
+                  }}
                 />
-              ))}
-          </div>
-        </div>
-        <RecordButton onClick={handleRecordClick} isRecording={isRecording} />
-        <audio ref={audioRef} src={track} />
-        {isLoading && <LoadingSpinner />}
+                {step.step === 2 && (
+                  <RecordButton
+                    onClick={handleRecordClick}
+                    isRecording={isRecording}
+                  />
+                )}
+                {step.step > 2 && (
+                  <div className="absolute bottom-5 left-6">
+                    <MenuItem
+                      label="Скачать"
+                      icon="/icons/download"
+                      onClick={() => {}}
+                    />
+                  </div>
+                )}
+              </div>
+            ))
+        ) : (
+          <>
+            <div className="absolute bottom-40 left-1/2 -translate-x-1/2">
+              <div className="gap-2 flex justify-center">
+                {activeThumbs.length > 0 &&
+                  activeThumbs.map((thumb: any) => (
+                    <Thumb
+                      {...thumb}
+                      isActive={thumb.effect === activeEffect}
+                      onClick={() => handleThumbClick(thumb.effect, slot)}
+                      key={thumb.effect}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className="absolute bottom-5 left-6">
+              <MenuItem
+                label="Скачать"
+                icon="/icons/download"
+                onClick={() => {}}
+              />
+            </div>
+            <RecordButton
+              onClick={handleRecordClick}
+              isRecording={isRecording}
+            />
+            <audio ref={audioRef} src={track} />
+            {isLoading && <LoadingSpinner />}
+          </>
+        )}
       </div>
     </div>
   )

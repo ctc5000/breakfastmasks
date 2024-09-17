@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ARScreen from './components/arScreen'
+import ARScreen from './components/ArScreen'
 import { DeepARProvider } from './hooks/useDeepAR'
 import WelcomeScreen from './components/WelcomeScreen'
 

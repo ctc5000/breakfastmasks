@@ -88,6 +88,29 @@ const data = {
       ],
     },
   ],
+
+  tutorial: [
+    {
+      step: 1,
+      text: 'Чтобы начать, просто выбери любой из чудо-эффектов на панели слева',
+      image: '/images/unicorn-tutorial.png',
+    },
+    {
+      step: 2,
+      text: 'Для того, чтобы снять свой ритуал нажми на кружок с задержкой',
+      image: '/images/baddy-tutorial.png',
+    },
+    {
+      step: 3,
+      text: 'Чтобы сохранить видео, нажми на кнопку «скачать»',
+      image: '/images/groom-tutorial.png',
+    },
+    {
+      step: 4,
+      text: 'Загрузи видео в галерею ритуалов и получи почетную грамоту повелителя завтраков и возможность выиграть инстакамеру',
+      image: '/images/unicorn-tutorial.png',
+    },
+  ],
 }
 
 export default data

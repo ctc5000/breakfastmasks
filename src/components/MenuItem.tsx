@@ -8,14 +8,10 @@ interface MenuItemProps {
 }
 
 const MenuItem: FC<MenuItemProps> = ({ label, icon, isActive, onClick }) => {
-  const handleClick = () => {
-    onClick()
-  }
-
   return (
     <div
       className="flex flex-col items-center justify-center gap-1 mb-3"
-      onClick={handleClick}
+      onClick={onClick}
     >
       <div className="bg-white bg-opacity-40 rounded p-1">
         <div className="w-full h-full">
