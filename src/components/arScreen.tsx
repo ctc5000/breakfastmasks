@@ -68,6 +68,7 @@ const ARScreen: FC<ARScreenProps> = () => {
 
   const handleRecordClick = async () => {
     if (isRecording) {
+      setIsLoading(true)
       setIsRecording(false)
       const blobData = await finishVideoRecording()
       const videoBlob = new Blob([blobData], { type: 'video/mp4' })
@@ -77,7 +78,7 @@ const ARScreen: FC<ARScreenProps> = () => {
       console.log('videoAndAudio', videoAndAudio)
 
       videoAndAudio.click()
-
+      setIsLoading(false)
       // const url = URL.createObjectURL(videoBlob)
       // const a = document.createElement('a')
       // a.href = url
