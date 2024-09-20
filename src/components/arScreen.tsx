@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 // @ts-ignore
 import data from '../../data.js'
 import MenuItem from './MenuItem.js'
@@ -13,6 +13,7 @@ import LoadingSpinner from './LoadingSpinner.js'
 import RecordButton from './RecordButton.js'
 import ResetButton from './ResetButton.js'
 import Tutorial from './Tutorial.js'
+import { VideoAudioMerger } from './VideoAudioMerger.js'
 
 interface ARScreenProps {}
 
@@ -49,10 +50,10 @@ const ARScreen: FC<ARScreenProps> = () => {
   const handleThumbClick = async (effect: string, slot: string) => {
     setIsLoading(true)
 
-    // if (slot === 'music') {
-    //   setTrack(effect)
-    //   return
-    // }
+    if (slot === 'music') {
+      setTrack(effect)
+      return
+    }
 
     setActiveEffect(effect)
 
@@ -70,11 +71,18 @@ const ARScreen: FC<ARScreenProps> = () => {
       setIsRecording(false)
       const blobData = await finishVideoRecording()
       const videoBlob = new Blob([blobData], { type: 'video/mp4' })
-      const url = URL.createObjectURL(videoBlob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'video.mp4'
-      a.click()
+
+      const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
+
+      console.log('videoAndAudio', videoAndAudio)
+
+      videoAndAudio.click()
+
+      // const url = URL.createObjectURL(videoBlob)
+      // const a = document.createElement('a')
+      // a.href = url
+      // a.download = 'video.mp4'
+      // a.click()
     } else {
       setIsRecording(true)
       await startVideoRecording()
@@ -92,15 +100,15 @@ const ARScreen: FC<ARScreenProps> = () => {
     setSlot('')
     setIsLoading(false)
     setIsRecording(false)
-    // audioRef.current && audioRef.current.pause()
+    audioRef.current && audioRef.current.pause()
   }
 
-  // useEffect(() => {
-  //   if (!track) return
+  useEffect(() => {
+    if (!track) return
 
-  //   audioRef.current && audioRef.current.play()
-  //   setIsLoading(false)
-  // }, [track])
+    audioRef.current && audioRef.current.play()
+    setIsLoading(false)
+  }, [track])
 
   return (
     <div className="relative">

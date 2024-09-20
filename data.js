@@ -24,14 +24,18 @@ const data = {
       icon: '/icons/background',
       slot: 'background',
       thumbs: [
-        // {
-        //   effect: '/effects/Unicorn_bg.deepar',
-        //   icon: '/thumbs/unicorn_bg.png',
-        // },
-        // {
-        //   effect: '/effects/Rainbow_bg.deepar',
-        //   icon: '/thumbs/rainbow_bg.png',
-        // },
+        {
+          effect: '/effects/Unicorn_bg.deepar',
+          icon: '/thumbs/unicorn_bg.png',
+        },
+        {
+          effect: '/effects/Choco_bg.deepar',
+          icon: '/thumbs/choco_bg.png',
+        },
+        {
+          effect: '/effects/Rainbow_bg.deepar',
+          icon: '/thumbs/rainbow_bg.png',
+        },
       ],
     },
     {
@@ -40,11 +44,11 @@ const data = {
       slot: 'music',
       thumbs: [
         {
-          effect: '/effects/chocozavr_music.deepar',
+          effect: '/music/chocozavr_music.mp3',
           icon: '/thumbs/chocozavr_music.png',
         },
         {
-          effect: '/effects/unicorn_music.deepar',
+          effect: '/music/unicorn_music.mp3',
           icon: '/thumbs/unicorn_music.png',
         },
       ],
