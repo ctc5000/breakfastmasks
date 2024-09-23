@@ -13,6 +13,8 @@ import LoadingSpinner from './LoadingSpinner.js'
 import RecordButton from './RecordButton.js'
 import ResetButton from './ResetButton.js'
 import Tutorial from './Tutorial.js'
+
+// @ts-ignore
 import { VideoAudioMerger } from './VideoAudioMerger.js'
 
 interface ARScreenProps {}
@@ -133,7 +135,7 @@ const ARScreen: FC<ARScreenProps> = () => {
                 <Tutorial
                   {...step}
                   onClickNext={() => {
-                    tutorialStep < 4
+                    tutorialStep < 3
                       ? setTutorialStep(tutorialStep + 1)
                       : setIsTutorialOpen(false)
                   }}
@@ -146,15 +148,6 @@ const ARScreen: FC<ARScreenProps> = () => {
                     onClick={handleRecordClick}
                     isRecording={isRecording}
                   />
-                )}
-                {step.step > 2 && (
-                  <div className="absolute bottom-5 left-6">
-                    <MenuItem
-                      label="Скачать"
-                      icon="/icons/download"
-                      onClick={() => {}}
-                    />
-                  </div>
                 )}
               </div>
             ))
@@ -173,13 +166,13 @@ const ARScreen: FC<ARScreenProps> = () => {
                   ))}
               </div>
             </div>
-            <div className="absolute bottom-5 left-6">
+            {/* <div className="absolute bottom-5 left-6">
               <MenuItem
                 label="Скачать"
                 icon="/icons/download"
                 onClick={() => {}}
               />
-            </div>
+            </div> */}
             <RecordButton
               onClick={handleRecordClick}
               isRecording={isRecording}

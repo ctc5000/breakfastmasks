@@ -46,12 +46,12 @@ const Tutorial: FC<TutorialProps> = ({
           className="absolute bottom-[53px] left-[74px]"
         />
       )}
-      {step === 3 && (
+      {/* {step === 3 && (
         <img
           src="/images/arrow-left.png"
           className="absolute bottom-[60px] left-[74px]"
         />
-      )}
+      )} */}
       <img src={image} className="absolute bottom-0 right-0" />
     </div>
   )
