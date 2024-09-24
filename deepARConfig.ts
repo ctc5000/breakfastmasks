@@ -12,7 +12,7 @@ export const initializeDeepAR = async (previewElement: HTMLElement) => {
     try {
       deepARInstance = await deepar.initialize({
         licenseKey:
-          '621e86d3887f1c0af3f25004dc2e72e4dc6a71a34412ce84add4f80da28bdce0224c0a4c6a511563',
+          '84ac208b42400eacb0c3a7ad57de5078ed71aa06a2a068dc67ebeaabe1ba2b49a9bc28d05b4acec6',
         previewElement,
       })
       isInitializing = false
