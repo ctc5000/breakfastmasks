@@ -77,8 +77,6 @@ const ARScreen: FC<ARScreenProps> = () => {
 
       const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
 
-      console.log('videoAndAudio', videoAndAudio)
-
       videoAndAudio.click()
       setIsLoading(false)
       // const url = URL.createObjectURL(videoBlob)
