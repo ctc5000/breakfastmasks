@@ -31,6 +31,7 @@ const ARScreen: FC<ARScreenProps> = () => {
   const [activeThumbs, setActiveThumbs] = useState([])
   const [activeEffect, setActiveEffect] = useState('')
   const [track, setTrack] = useState('')
+  const [isMicOpen, setIsMicOpen] = useState(false)
 
   const handleMenuClick = (label: string) => {
     setActiveMenuItem(label)
@@ -77,16 +78,15 @@ const ARScreen: FC<ARScreenProps> = () => {
 
       const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
 
+      audioRef.current && audioRef.current.pause()
+      setTrack('')
+
       videoAndAudio.click()
       setIsLoading(false)
-      // const url = URL.createObjectURL(videoBlob)
-      // const a = document.createElement('a')
-      // a.href = url
-      // a.download = 'video.mp4'
-      // a.click()
+      window.parent.postMessage({ type: 'video_downloaded' }, '*')
     } else {
       setIsRecording(true)
-      await startVideoRecording()
+      await startVideoRecording(isMicOpen)
     }
   }
 
@@ -105,8 +105,11 @@ const ARScreen: FC<ARScreenProps> = () => {
   }
 
   useEffect(() => {
-    if (!track) return
+    if (!track) {
+      setIsMicOpen(true)
+    }
 
+    setIsMicOpen(false)
     audioRef.current && audioRef.current.play()
     setIsLoading(false)
   }, [track])
@@ -164,13 +167,6 @@ const ARScreen: FC<ARScreenProps> = () => {
                   ))}
               </div>
             </div>
-            {/* <div className="absolute bottom-5 left-6">
-              <MenuItem
-                label="Скачать"
-                icon="/icons/download"
-                onClick={() => {}}
-              />
-            </div> */}
             <RecordButton
               onClick={handleRecordClick}
               isRecording={isRecording}

@@ -1,4 +1,5 @@
 import * as deepar from 'deepar'
+import { DeepAR } from 'deepar'
 
 let deepARInstance: any = null
 let isInitializing = false
@@ -34,9 +35,11 @@ export const switchEffect = async (effectPath: string, slot: string) => {
   }
 }
 
-export const startVideoRecording = async () => {
+export const startVideoRecording = async (recordAudio = false) => {
+  console.log('recordAudio', recordAudio)
+
   if (deepARInstance) {
-    await deepARInstance.startVideoRecording()
+    await deepARInstance.startVideoRecording({ recordAudio })
   }
 }
 
