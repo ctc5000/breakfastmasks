@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react'
-import { cn } from '../utils/helpers'
 
 interface RecordButtonProps {
   isRecording: boolean
@@ -17,7 +16,6 @@ const RecordButton: FC<RecordButtonProps> = ({
   const center = size / 2
   const radius = center - strokeWidth / 2
   const circumference = 2 * Math.PI * radius
-  const strokeDashoffset = circumference - (progress / 100) * circumference
 
   useEffect(() => {
     let interval = 0
@@ -39,6 +37,8 @@ const RecordButton: FC<RecordButtonProps> = ({
       clearInterval(interval)
     }
   }, [isRecording])
+
+  console.log(progress)
 
   return (
     <div
