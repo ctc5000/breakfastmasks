@@ -1,5 +1,4 @@
 import * as deepar from 'deepar'
-import { DeepAR } from 'deepar'
 
 let deepARInstance: any = null
 let isInitializing = false
