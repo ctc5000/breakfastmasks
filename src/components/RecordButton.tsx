@@ -52,7 +52,6 @@ const RecordButton: FC<RecordButtonProps> = ({
           className="absolute top-0 left-0"
           style={{ transform: 'rotate(-90deg)' }}
         >
-          {/* Фоновое кольцо */}
           <circle
             cx={center}
             cy={center}
@@ -62,7 +61,6 @@ const RecordButton: FC<RecordButtonProps> = ({
             strokeWidth={strokeWidth}
             fill="none"
           />
-          {/* Кольцо прогресса */}
           {isRecording && (
             <circle
               cx={center}
@@ -77,7 +75,6 @@ const RecordButton: FC<RecordButtonProps> = ({
             />
           )}
         </svg>
-        {/* Стили для анимации */}
         <style>{`
         .progress-ring {
           animation: progress-animation 40s linear forwards;
