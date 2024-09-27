@@ -21,6 +21,8 @@ import { VideoAudioMerger } from './VideoAudioMerger.js'
 
 interface ARScreenProps {}
 
+const MAX_RECORD_TIME = 38
+
 const ARScreen: FC<ARScreenProps> = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -206,7 +208,7 @@ const ARScreen: FC<ARScreenProps> = () => {
         await startVideoRecording(isMicOpen)
         const timeout = setTimeout(() => {
           stopRecording()
-        }, 38000)
+        }, MAX_RECORD_TIME * 1000)
         setRecordingTimeout(timeout)
       }
       audioRef.current && audioRef.current.play()
