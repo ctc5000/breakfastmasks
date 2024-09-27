@@ -218,6 +218,8 @@ const ARScreen: FC<ARScreenProps> = () => {
     return () => clearTimeout(timer)
   }, [countdown])
 
+  console.log('WINDOW.PARENT: ', window.parent)
+
   return (
     <div className="relative">
       <div className="fixed inset-0 w-svw h-svh">
