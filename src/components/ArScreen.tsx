@@ -13,10 +13,11 @@ import LoadingSpinner from './LoadingSpinner.js'
 import RecordButton from './RecordButton.js'
 import ResetButton from './ResetButton.js'
 import Tutorial from './Tutorial.js'
+import { cn } from '../utils/helpers.js'
+import { FcCancel } from 'react-icons/fc'
 
 // @ts-ignore
 import { VideoAudioMerger } from './VideoAudioMerger.js'
-import { cn } from '../utils/helpers.js'
 
 interface ARScreenProps {}
 
@@ -34,6 +35,7 @@ const ARScreen: FC<ARScreenProps> = () => {
   const [track, setTrack] = useState('')
   const [isMicOpen, setIsMicOpen] = useState(false)
   const [countdown, setCountdown] = useState<number | null>(null)
+  const [recordingTimeout, setRecordingTimeout] = useState<number | null>(null)
 
   const handleMenuClick = (label: string) => {
     setActiveMenuItem(label)
@@ -73,32 +75,33 @@ const ARScreen: FC<ARScreenProps> = () => {
 
   const handleRecordClick = async () => {
     if (isRecording) {
-      setIsLoading(true)
-      setIsRecording(false)
+      await stopRecording()
+      // setIsLoading(true)
+      // setIsRecording(false)
 
-      if (!track) {
-        const blobData = await finishVideoRecording()
-        const videoBlob = new Blob([blobData], { type: 'video/mp4' })
-        const downloadLink = document.createElement('a')
-        downloadLink.href = URL.createObjectURL(videoBlob)
-        downloadLink.download = 'my-breakfast-mask.mp4'
-        downloadLink.click()
-        setIsLoading(false)
-        setCountdown(null)
-        return
-      }
+      // if (!track) {
+      //   const blobData = await finishVideoRecording()
+      //   const videoBlob = new Blob([blobData], { type: 'video/mp4' })
+      //   const downloadLink = document.createElement('a')
+      //   downloadLink.href = URL.createObjectURL(videoBlob)
+      //   downloadLink.download = 'my-breakfast-mask.mp4'
+      //   downloadLink.click()
+      //   setIsLoading(false)
+      //   setCountdown(null)
+      //   return
+      // }
 
-      const blobData = await finishVideoRecording()
-      const videoBlob = new Blob([blobData], { type: 'video/mp4' })
-      const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
+      // const blobData = await finishVideoRecording()
+      // const videoBlob = new Blob([blobData], { type: 'video/mp4' })
+      // const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
 
-      audioRef.current && audioRef.current.pause()
-      setTrack('')
+      // audioRef.current && audioRef.current.pause()
+      // setTrack('')
 
-      videoAndAudio.click()
-      setIsLoading(false)
-      window.parent.postMessage({ type: 'video_downloaded' }, '*')
-      setCountdown(null)
+      // videoAndAudio.click()
+      // setIsLoading(false)
+      // window.parent.postMessage({ type: 'video_downloaded' }, '*')
+      // setCountdown(null)
     } else {
       if (audioRef.current) {
         audioRef.current.pause()
@@ -108,8 +111,46 @@ const ARScreen: FC<ARScreenProps> = () => {
     }
   }
 
+  const stopRecording = async () => {
+    setIsLoading(true)
+    setIsRecording(false)
+
+    if (recordingTimeout) {
+      clearTimeout(recordingTimeout)
+      setRecordingTimeout(null)
+    }
+
+    if (!track) {
+      const blobData = await finishVideoRecording()
+      const videoBlob = new Blob([blobData], { type: 'video/mp4' })
+      const downloadLink = document.createElement('a')
+      downloadLink.href = URL.createObjectURL(videoBlob)
+      downloadLink.download = 'my-breakfast-mask.mp4'
+      downloadLink.click()
+      setIsLoading(false)
+      setCountdown(null)
+      return
+    }
+
+    const blobData = await finishVideoRecording()
+    const videoBlob = new Blob([blobData], { type: 'video/mp4' })
+    const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
+
+    audioRef.current && audioRef.current.pause()
+    setTrack('')
+
+    videoAndAudio.click()
+    setIsLoading(false)
+    window.parent.postMessage({ type: 'video_downloaded' }, '*')
+    setCountdown(null)
+  }
+
   const handleReset = async () => {
     setIsLoading(true)
+    if (recordingTimeout) {
+      clearTimeout(recordingTimeout)
+      setRecordingTimeout(null)
+    }
     await Promise.all(allSlots.map((slot: string) => clearEffect(slot)))
     setAllSlots([])
     setActiveEffect('')
@@ -121,6 +162,23 @@ const ARScreen: FC<ARScreenProps> = () => {
     setIsRecording(false)
     setCountdown(null)
     audioRef.current && audioRef.current.pause()
+  }
+
+  const handleCancelEffect = async (slot: string) => {
+    if (slot === 'music') {
+      setTrack('')
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+      return
+    }
+
+    setIsLoading(true)
+    setActiveEffect('')
+    await clearEffect(slot)
+    setSlot('')
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -146,6 +204,10 @@ const ARScreen: FC<ARScreenProps> = () => {
       const startRecording = async () => {
         setIsRecording(true)
         await startVideoRecording(isMicOpen)
+        const timeout = setTimeout(() => {
+          stopRecording()
+        }, 38000)
+        setRecordingTimeout(timeout)
       }
       audioRef.current && audioRef.current.play()
       startRecording()
@@ -206,14 +268,34 @@ const ARScreen: FC<ARScreenProps> = () => {
             >
               <div className="gap-2 flex justify-center">
                 {activeThumbs.length > 0 &&
-                  activeThumbs.map((thumb: any) => (
-                    <Thumb
-                      {...thumb}
-                      isActive={thumb.effect === activeEffect}
-                      onClick={() => handleThumbClick(thumb.effect, slot)}
-                      key={thumb.effect}
-                    />
-                  ))}
+                  activeThumbs.map((thumb: any, index: number) => {
+                    return (
+                      <div
+                        className="gap-2 flex justify-center"
+                        key={thumb.effect}
+                      >
+                        <Thumb
+                          {...thumb}
+                          isActive={
+                            thumb.effect === activeEffect ||
+                            thumb.effect === track
+                          }
+                          onClick={() => handleThumbClick(thumb.effect, slot)}
+                        />
+                        {index === activeThumbs.length - 1 && (
+                          <div
+                            className="bg-white bg-opacity-40 rounded w-[35px] h-[35px] flex justify-center items-center"
+                            onClick={async () => await handleCancelEffect(slot)}
+                          >
+                            <FcCancel className="text-3xl" />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                {/* <div className="bg-white bg-opacity-40 rounded w-[35px] h-[35px] flex justify-center items-center">
+                  <FcCancel className="text-3xl" />
+                </div> */}
               </div>
             </div>
             <RecordButton
