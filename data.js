@@ -1,5 +1,3 @@
-import { FcCancel } from 'react-icons/fc'
-
 const data = {
   menu: [
     {
