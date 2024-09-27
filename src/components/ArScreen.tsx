@@ -131,6 +131,7 @@ const ARScreen: FC<ARScreenProps> = () => {
       downloadLink.click()
       setIsLoading(false)
       setCountdown(null)
+      window.parent.postMessage({ type: 'video_downloaded' }, '*')
       return
     }
 
