@@ -78,32 +78,6 @@ const ARScreen: FC<ARScreenProps> = () => {
   const handleRecordClick = async () => {
     if (isRecording) {
       await stopRecording()
-      // setIsLoading(true)
-      // setIsRecording(false)
-
-      // if (!track) {
-      //   const blobData = await finishVideoRecording()
-      //   const videoBlob = new Blob([blobData], { type: 'video/mp4' })
-      //   const downloadLink = document.createElement('a')
-      //   downloadLink.href = URL.createObjectURL(videoBlob)
-      //   downloadLink.download = 'my-breakfast-mask.mp4'
-      //   downloadLink.click()
-      //   setIsLoading(false)
-      //   setCountdown(null)
-      //   return
-      // }
-
-      // const blobData = await finishVideoRecording()
-      // const videoBlob = new Blob([blobData], { type: 'video/mp4' })
-      // const videoAndAudio: any = await VideoAudioMerger(videoBlob, track)
-
-      // audioRef.current && audioRef.current.pause()
-      // setTrack('')
-
-      // videoAndAudio.click()
-      // setIsLoading(false)
-      // window.parent.postMessage({ type: 'video_downloaded' }, '*')
-      // setCountdown(null)
     } else {
       if (audioRef.current) {
         audioRef.current.pause()
@@ -218,8 +192,6 @@ const ARScreen: FC<ARScreenProps> = () => {
     return () => clearTimeout(timer)
   }, [countdown])
 
-  console.log('WINDOW.PARENT: ', window.parent)
-
   return (
     <div className="relative">
       <div className="fixed inset-0 w-svw h-svh">
@@ -247,7 +219,7 @@ const ARScreen: FC<ARScreenProps> = () => {
                 <Tutorial
                   {...step}
                   onClickNext={() => {
-                    tutorialStep < 3
+                    tutorialStep < 4
                       ? setTutorialStep(tutorialStep + 1)
                       : setIsTutorialOpen(false)
                   }}
@@ -298,9 +270,6 @@ const ARScreen: FC<ARScreenProps> = () => {
                       </div>
                     )
                   })}
-                {/* <div className="bg-white bg-opacity-40 rounded w-[35px] h-[35px] flex justify-center items-center">
-                  <FcCancel className="text-3xl" />
-                </div> */}
               </div>
             </div>
             <RecordButton
