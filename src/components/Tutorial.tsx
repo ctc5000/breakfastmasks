@@ -40,6 +40,12 @@ const Tutorial: FC<TutorialProps> = ({
         onClick={onClickNext}
         classNames={hintClassName[step as stepType]}
       />
+      {step === 1 && (
+        <img
+          src="/images/arrow-up.png"
+          className="absolute bottom-[220px] left-[82px]"
+        />
+      )}
       {step === 2 && (
         <img
           src="/images/arrow-right.png"
