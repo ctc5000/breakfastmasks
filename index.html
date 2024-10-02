@@ -14,6 +14,16 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
+    <script>
+      if (
+        typeof window !== 'undefined' &&
+        window.crossOriginIsolated !== true
+      ) {
+        const script = document.createElement('script')
+        script.src = 'coi-serviceworker.js'
+        document.head.appendChild(script)
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

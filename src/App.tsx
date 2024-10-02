@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ARScreen from './components/ArScreen'
 import { DeepARProvider } from './hooks/useDeepAR'
 import WelcomeScreen from './components/WelcomeScreen'
 
 function App() {
   const [isStarted, setIsStarted] = useState(false)
+
+  useEffect(() => {
+    console.log('crossOriginIsolated:', window.crossOriginIsolated)
+  }, [])
 
   return (
     <>
